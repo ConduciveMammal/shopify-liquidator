@@ -1,14 +1,11 @@
 # `shopify-liquidator`
 
+> [!WARNING]  
+> This project is currently a proof-of-concept. Authentication and theme listing work, but Shopify blocks the `themeDelete` mutation unless the app has Shopify's separate theme modification exemption. Until that exemption is granted, this package does not provide working theme deletion on a normal app setup.
+
 Interactive CLI for listing Shopify store themes, selecting multiple themes with a checklist UI, and deleting the selected themes after an explicit danger confirmation.
 
 This CLI uses Shopify's authorisation code grant for non-embedded apps. On the first run for a shop, it opens the Shopify login window in your browser, stores an offline Admin API token locally, and reuses that token on later runs.
-
-## Warning
-
-This project is currently a proof-of-concept.
-
-Authentication works and the CLI can list installed themes, but theme deletion is not currently usable in practice because Shopify blocks the `themeDelete` mutation unless the app has Shopify's separate theme modification exemption. Without that exemption, the CLI will fail at the deletion step.
 
 ## Requirements
 
