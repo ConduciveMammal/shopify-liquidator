@@ -1,13 +1,36 @@
+import {readFile} from 'node:fs/promises';
+
 export function sendJson(response, statusCode, payload) {
 	response.statusCode = statusCode;
 	response.setHeader('Content-Type', 'application/json; charset=utf-8');
 	response.end(JSON.stringify(payload));
 }
 
-export function sendHtml(response, statusCode, title, message) {
+function escapeHtml(value) {
+	return String(value)
+		.replaceAll('&', '&amp;')
+		.replaceAll('<', '&lt;')
+		.replaceAll('>', '&gt;')
+		.replaceAll('"', '&quot;')
+		.replaceAll("'", '&#39;');
+}
+
+const statusPageTemplatePromise = readFile(
+	new URL('../_templates/status-page.html', import.meta.url),
+	'utf8'
+);
+
+export async function sendHtml(response, statusCode, title, message) {
+	const safeTitle = escapeHtml(title);
+	const safeMessage = escapeHtml(message);
+	const template = await statusPageTemplatePromise;
+	const html = template
+		.replaceAll('{{TITLE}}', safeTitle)
+		.replace('{{MESSAGE}}', safeMessage);
+
 	response.statusCode = statusCode;
 	response.setHeader('Content-Type', 'text/html; charset=utf-8');
-	response.end(`<!doctype html><html><head><meta charset="utf-8"><title>${title}</title></head><body><h1>${title}</h1><p>${message}</p></body></html>`);
+	response.end(html);
 }
 
 export function sendMethodNotAllowed(response, allowedMethods) {

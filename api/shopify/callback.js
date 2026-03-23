@@ -34,7 +34,7 @@ export default async function handler(request, response) {
 			await failAuthSession(storage, sessionId, message, details);
 		}
 
-		sendHtml(response, statusCode, title, message);
+		await sendHtml(response, statusCode, title, message);
 	}
 
 	try {
@@ -102,7 +102,7 @@ export default async function handler(request, response) {
 			cliToken
 		});
 
-		sendHtml(response, 200, 'Authentication complete', 'The Shopify app is authorised. Return to the terminal to continue.');
+		await sendHtml(response, 200, 'Authentication complete', 'Theme Liquidator is authorised. Return to the terminal to continue.');
 	} catch (error) {
 		await fail(500, 'Authentication failed', error.message, error.details ?? []);
 	}
