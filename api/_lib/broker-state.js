@@ -5,6 +5,10 @@ function authSessionKey(sessionId) {
 	return `auth-session:${sessionId}`;
 }
 
+function authStateKey(state) {
+	return `auth-state:${state}`;
+}
+
 function shopTokenKey(shop) {
 	return `shop:${shop}`;
 }
@@ -22,17 +26,30 @@ export function createStateToken() {
 }
 
 export async function createPendingAuthSession(storage, {sessionId, shop, state}, ttlSeconds) {
-	await storage.setJson(authSessionKey(sessionId), {
+	const payload = {
 		sessionId,
 		shop,
 		state,
 		status: 'pending',
 		createdAt: new Date().toISOString()
-	}, ttlSeconds);
+	};
+
+	await storage.setJson(authSessionKey(sessionId), payload, ttlSeconds);
+	await storage.setJson(authStateKey(state), {sessionId}, ttlSeconds);
 }
 
 export async function getAuthSession(storage, sessionId) {
 	return storage.getJson(authSessionKey(sessionId));
+}
+
+export async function getAuthSessionByState(storage, state) {
+	const stateRecord = await storage.getJson(authStateKey(state));
+
+	if (!stateRecord?.sessionId) {
+		return null;
+	}
+
+	return getAuthSession(storage, stateRecord.sessionId);
 }
 
 export async function failAuthSession(storage, sessionId, error, details = []) {

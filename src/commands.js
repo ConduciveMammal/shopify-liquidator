@@ -52,7 +52,7 @@ function getMissingAppCredentialsMessage() {
 }
 
 function getMissingBrokerConfigurationMessage() {
-	return 'Missing hosted broker configuration. Set `SHOPIFY_LIQUIDATOR_API_BASE_URL` to use your Vercel-hosted Shopify app.';
+	return 'Missing hosted broker configuration.';
 }
 
 function isBrokerProfile(profile) {

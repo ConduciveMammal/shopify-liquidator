@@ -26,7 +26,7 @@ export default async function handler(request, response) {
 		const storage = getStorage();
 		const sessionId = createSessionId();
 		const state = createStateToken();
-		const redirectUri = `${brokerConfig.appUrl}/api/shopify/callback?session=${encodeURIComponent(sessionId)}`;
+		const redirectUri = `${brokerConfig.appUrl}/api/shopify/callback`;
 
 		await createPendingAuthSession(storage, {
 			sessionId,

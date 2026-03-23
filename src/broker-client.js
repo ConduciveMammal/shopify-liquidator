@@ -7,6 +7,7 @@ import {ShopifyApiError} from './shopify.js';
 const execFileAsync = promisify(execFile);
 const DEFAULT_AUTH_TIMEOUT_MS = 5 * 60 * 1000;
 const DEFAULT_POLL_INTERVAL_MS = 1500;
+export const DEFAULT_BROKER_API_BASE_URL = 'https://liquidator.merlyndesignworks.co.uk';
 
 function parseResponseText(payload) {
 	if (typeof payload === 'string') {
@@ -54,7 +55,7 @@ async function requestBroker(apiBaseUrl, pathname, options = {}, fetchImpl = glo
 	const baseUrl = normaliseApiBaseUrl(apiBaseUrl);
 
 	if (!baseUrl) {
-		throw new Error('Missing hosted API base URL. Set `SHOPIFY_LIQUIDATOR_API_BASE_URL`.');
+		throw new Error('Missing hosted API base URL.');
 	}
 
 	const {
@@ -146,7 +147,13 @@ export function getBrokerApiBaseUrl(env = process.env, authConfig = null, shopPr
 		return shopUrl;
 	}
 
-	return normaliseApiBaseUrl(authConfig?.credentials?.apiBaseUrl ?? '');
+	const configUrl = normaliseApiBaseUrl(authConfig?.credentials?.apiBaseUrl ?? '');
+
+	if (configUrl) {
+		return configUrl;
+	}
+
+	return DEFAULT_BROKER_API_BASE_URL;
 }
 
 export function isBrokerConfigured(env = process.env, authConfig = null, shopProfile = null) {

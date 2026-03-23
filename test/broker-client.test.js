@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {getBrokerApiBaseUrl, isBrokerConfigured} from '../src/broker-client.js';
+import {DEFAULT_BROKER_API_BASE_URL, getBrokerApiBaseUrl, isBrokerConfigured} from '../src/broker-client.js';
 
 test('getBrokerApiBaseUrl prefers the environment value', () => {
 	const authConfig = {
@@ -50,5 +50,22 @@ test('isBrokerConfigured falls back to stored shop and global config values', ()
 			}
 		),
 		true
+	);
+});
+
+test('getBrokerApiBaseUrl falls back to the baked-in production broker URL', () => {
+	assert.equal(
+		getBrokerApiBaseUrl(
+			{},
+			{
+				credentials: {
+					apiBaseUrl: ''
+				}
+			},
+			{
+				apiBaseUrl: ''
+			}
+		),
+		DEFAULT_BROKER_API_BASE_URL
 	);
 });

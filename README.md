@@ -5,7 +5,7 @@ Interactive terminal UI for reviewing Shopify themes, shortlisting the ones you 
 
 `shopify-liquidator` is built for operators who want something safer than ad-hoc API scripts. It opens a browser-based Shopify install flow when needed, stores reusable login details locally, hides protected themes from the selection list, supports dry runs, and then processes deletions sequentially so failures are easy to understand.
 
-For public release, the recommended setup is now a hosted broker on Vercel. In that mode, your Shopify app credentials and exemption stay on your server, merchants authorise your app in the browser, and the CLI only stores a broker session token locally.
+For public release, the CLI now defaults to the hosted broker at `liquidator.merlyndesignworks.co.uk`. In that mode, your Shopify app credentials and exemption stay on your server, merchants authorise your app in the browser, and the CLI only stores a broker session token locally.
 
 > [!IMPORTANT]
 > Real theme deletion still depends on Shopify granting your app protected theme modification access. Without that exemption, authentication and theme discovery work, dry runs work, but the live `themeDelete` mutation will be rejected by Shopify.
@@ -110,10 +110,9 @@ KV_REST_API_TOKEN="..."
 https://your-app.example.com/api/shopify/callback
 ```
 
-4. Run the CLI against your hosted broker:
+4. Run the CLI:
 
 ```bash
-export SHOPIFY_LIQUIDATOR_API_BASE_URL="https://your-app.example.com"
 theme-liquidate --shop your-store --dry
 ```
 
@@ -227,7 +226,7 @@ Deletion is processed sequentially. If Shopify rejects theme deletion at the app
 
 ## Environment Variables
 
-Hosted broker mode:
+Hosted broker override:
 
 - `SHOPIFY_LIQUIDATOR_API_BASE_URL`
 
@@ -246,6 +245,7 @@ Direct local OAuth overrides:
 
 - `SHOPIFY_OAUTH_REDIRECT_URI`
 
+By default, the CLI uses `https://liquidator.merlyndesignworks.co.uk` as its hosted broker. If `SHOPIFY_LIQUIDATOR_API_BASE_URL` is set, it overrides that default.
 If hosted broker mode is configured, the CLI stores the broker base URL in its config and a per-shop broker session token in the native OS credential store.
 If direct local OAuth mode is used, the CLI stores the client ID in its config, the client secret in the native OS credential store, and a per-shop offline token in the native OS credential store.
 If secure storage is unavailable, the CLI will ask you to enable an OS credential store instead of writing secrets into the JSON config file.

@@ -13,9 +13,11 @@ Usage:
 
 Run command:
   Fetches themes for the selected shop and opens the interactive deletion UI.
-  If SHOPIFY_LIQUIDATOR_API_BASE_URL is set, the CLI opens your hosted Shopify
-  install flow and stores a broker session token locally. Otherwise it falls back
-  to the local OAuth flow and stores an offline Admin API token locally.
+  By default, the CLI opens the hosted Shopify install flow on
+  liquidator.merlyndesignworks.co.uk and stores a broker session token locally.
+  SHOPIFY_LIQUIDATOR_API_BASE_URL can override that for development or self-hosting.
+  If you intentionally bypass the hosted broker, the CLI falls back to local OAuth
+  and stores an offline Admin API token locally.
   If --shop is omitted, the default authenticated shop is used.
   Direct local OAuth requires Shopify app credentials through stored login data
   or the SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET environment variables.

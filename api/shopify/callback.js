@@ -8,7 +8,7 @@ import {getStorage} from '../_lib/storage.js';
 import {
 	completeAuthSession,
 	failAuthSession,
-	getAuthSession,
+	getAuthSessionByState,
 	issueCliToken,
 	saveShopToken
 } from '../_lib/broker-state.js';
@@ -25,8 +25,9 @@ export default async function handler(request, response) {
 	const brokerConfig = getShopifyBrokerConfig();
 	const storage = getStorage();
 	const requestUrl = getRequestUrl(request, brokerConfig.appUrl);
-	const sessionId = requestUrl.searchParams.get('session') ?? '';
-	const authSession = sessionId ? await getAuthSession(storage, sessionId) : null;
+	const state = requestUrl.searchParams.get('state') ?? '';
+	const authSession = state ? await getAuthSessionByState(storage, state) : null;
+	const sessionId = authSession?.sessionId ?? '';
 
 	async function fail(statusCode, title, message, details = []) {
 		if (sessionId) {
@@ -37,7 +38,6 @@ export default async function handler(request, response) {
 	}
 
 	try {
-		const state = requestUrl.searchParams.get('state') ?? '';
 		const shop = requestUrl.searchParams.get('shop') ?? '';
 		const code = requestUrl.searchParams.get('code') ?? '';
 

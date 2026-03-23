@@ -46,9 +46,11 @@ Usage:
 
 Run command:
   Fetches themes for the selected shop and opens the interactive deletion UI.
-  If SHOPIFY_LIQUIDATOR_API_BASE_URL is set, the CLI opens your hosted Shopify
-  install flow and stores a broker session token locally. Otherwise it falls back
-  to the local OAuth flow and stores an offline Admin API token locally.
+  By default, the CLI opens the hosted Shopify install flow on
+  liquidator.merlyndesignworks.co.uk and stores a broker session token locally.
+  SHOPIFY_LIQUIDATOR_API_BASE_URL can override that for development or self-hosting.
+  If you intentionally bypass the hosted broker, the CLI falls back to local OAuth
+  and stores an offline Admin API token locally.
   If --shop is omitted, the default authenticated shop is used.
   Direct local OAuth requires Shopify app credentials through stored login data
   or the SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET environment variables.
@@ -544,6 +546,7 @@ import { promisify } from "node:util";
 var execFileAsync = promisify(execFile);
 var DEFAULT_AUTH_TIMEOUT_MS = 5 * 60 * 1e3;
 var DEFAULT_POLL_INTERVAL_MS = 1500;
+var DEFAULT_BROKER_API_BASE_URL = "https://liquidator.merlyndesignworks.co.uk";
 function parseResponseText(payload) {
   if (typeof payload === "string") {
     return payload;
@@ -579,7 +582,7 @@ async function parseResponsePayload(response) {
 async function requestBroker(apiBaseUrl, pathname, options = {}, fetchImpl = globalThis.fetch) {
   const baseUrl = normaliseApiBaseUrl(apiBaseUrl);
   if (!baseUrl) {
-    throw new Error("Missing hosted API base URL. Set `SHOPIFY_LIQUIDATOR_API_BASE_URL`.");
+    throw new Error("Missing hosted API base URL.");
   }
   const {
     method = "GET",
@@ -653,7 +656,11 @@ function getBrokerApiBaseUrl(env = process.env, authConfig = null, shopProfile =
   if (shopUrl) {
     return shopUrl;
   }
-  return normaliseApiBaseUrl(authConfig?.credentials?.apiBaseUrl ?? "");
+  const configUrl = normaliseApiBaseUrl(authConfig?.credentials?.apiBaseUrl ?? "");
+  if (configUrl) {
+    return configUrl;
+  }
+  return DEFAULT_BROKER_API_BASE_URL;
 }
 async function startBrokeredAuth({ apiBaseUrl, shop }, fetchImpl = globalThis.fetch) {
   return requestBroker(apiBaseUrl, "/api/cli/auth/start", {
@@ -2013,7 +2020,7 @@ function getMissingAppCredentialsMessage() {
   return "Missing Shopify app credentials. Set `SHOPIFY_CLIENT_ID` and `SHOPIFY_CLIENT_SECRET` so `theme-liquidate` can open the Shopify login window.";
 }
 function getMissingBrokerConfigurationMessage() {
-  return "Missing hosted broker configuration. Set `SHOPIFY_LIQUIDATOR_API_BASE_URL` to use your Vercel-hosted Shopify app.";
+  return "Missing hosted broker configuration.";
 }
 function isBrokerProfile(profile) {
   return profile?.tokenType === "broker_session" || profile?.authMethod === "brokered";
