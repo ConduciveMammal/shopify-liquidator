@@ -8,9 +8,6 @@ Shopify Liquidator is built for users delete Shopify themes en masse from a stor
 
 To use the CLI, the store needs the companion Shopify app installed so the authentication flow can complete and the CLI can access the Theme API on that shop.
 
-> [!WARNING]
-> Shopify currently protects live theme deletion behind separate Theme API access. `write_themes` on its own is not enough. Without Shopify granting the app the theme modification exemption, authentication, theme discovery, and dry runs still work, but the live `themeDelete` mutation will be blocked.
-
 ## Install with npm
 
 ### Requirements
@@ -46,7 +43,7 @@ theme-liquidate --help
 For most users, the quickest path is:
 
 ```bash
-theme-liquidate --shop your-store --dry
+theme-liquidate --shop <store> --dry
 ```
 
 On first run, the CLI:
@@ -59,7 +56,7 @@ On first run, the CLI:
 Start with a dry run so you can review the shortlist without deleting anything. If the result looks right, rerun without `--dry`:
 
 ```bash
-theme-liquidate --shop your-store
+theme-liquidate --shop <store>
 ```
 
 ### Common commands
@@ -73,9 +70,9 @@ theme-liquidate [--shop <store>] [--dry] [--verbose]
 Examples:
 
 ```bash
-theme-liquidate --shop your-store
-theme-liquidate --shop your-store.myshopify.com --dry
-theme-liquidate --shop https://admin.shopify.com/store/your-store
+theme-liquidate --shop <store>
+theme-liquidate --shop <store>.myshopify.com --dry
+theme-liquidate --shop https://admin.shopify.com/store/<store>
 theme-liquidate --verbose
 ```
 
@@ -93,7 +90,7 @@ If `--shop` is omitted, the CLI uses the current default authenticated shop.
 Open the browser login flow without entering the deletion UI:
 
 ```bash
-theme-liquidate auth login --shop your-store
+theme-liquidate auth login --shop <store>
 ```
 
 Inspect stored auth state:
@@ -105,13 +102,13 @@ theme-liquidate auth list
 Set the default shop:
 
 ```bash
-theme-liquidate auth use --shop your-store
+theme-liquidate auth use --shop <store>
 ```
 
 Remove one stored shop:
 
 ```bash
-theme-liquidate auth remove --shop your-store
+theme-liquidate auth remove --shop <store>
 ```
 
 Clear all stored login data:
@@ -174,6 +171,9 @@ The config file tracks the default shop and saved shop metadata such as scopes a
 
 ## Develop locally
 
+> [!WARNING]
+> Shopify currently protects live theme deletion behind separate Theme API access. `write_themes` on its own is not enough. Without Shopify granting the app the theme modification exemption, authentication, theme discovery, and dry runs still work, but the live `themeDelete` mutation will be blocked.
+
 ### Install dependencies
 
 ```bash
@@ -191,7 +191,7 @@ npm run build
 Run the built CLI:
 
 ```bash
-npm start -- --shop your-store
+npm start -- --shop <store>
 ```
 
 Run tests:
