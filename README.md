@@ -12,7 +12,7 @@ To use the CLI, the store needs the companion Shopify app installed so the authe
 
 ### Requirements
 
-- Node.js `20.x`
+- Node.js `24.x`
 - A supported desktop credential store:
   - macOS Keychain
   - Windows Credential Manager
