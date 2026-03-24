@@ -1,6 +1,6 @@
 {
-  "name": "shopify-liquidator",
-  "version": "0.1.0",
+  "name": "@conducivemammal/shopify-liquidator",
+  "version": "0.1.1",
   "description": "Interactive CLI for deleting selected Shopify themes",
   "type": "module",
   "bin": {
@@ -25,8 +25,19 @@
     "themes",
     "ink"
   ],
-  "author": "",
+  "author": "Liam Merlyn",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConduciveMammal/shopify-liquidator.git"
+  },
+  "homepage": "https://github.com/ConduciveMammal/shopify-liquidator#readme",
+  "bugs": {
+    "url": "https://github.com/ConduciveMammal/shopify-liquidator/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "ink": "^6.3.1",
     "react": "^19.2.0"
