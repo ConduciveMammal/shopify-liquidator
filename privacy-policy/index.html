@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="shopify-api-key" content="12e224fd4a57f1bc42f5a32466faf2bd" />
+    <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
+    <title>Theme Liquidator Privacy Policy</title>
+    <style>
+      pre {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <s-page heading="Privacy Policy" inline-size="large">
+      <s-banner heading="Theme Liquidator" tone="info">
+        This policy explains what data Theme Liquidator processes, why it is used, and how merchants can request deletion or contact the developer.
+      </s-banner>
+
+      <s-section heading="Who operates Theme Liquidator">
+        <s-stack direction="block" gap="base">
+          <s-paragraph>Theme Liquidator is operated by Liam Merlyn through Merlyn Design Works.</s-paragraph>
+          <s-paragraph>
+            Website:
+            <s-link href="https://merlyndesignworks.co.uk" target="_blank">merlyndesignworks.co.uk</s-link>
+          </s-paragraph>
+        </s-stack>
+      </s-section>
+
+      <s-section heading="What data is processed">
+        <s-stack direction="block" gap="base">
+          <s-paragraph>The app processes only the data needed to authenticate a merchant, list themes, and delete themes selected by that merchant.</s-paragraph>
+          <s-unordered-list>
+            <s-list-item>Store identifiers such as the shop domain.</s-list-item>
+            <s-list-item>OAuth and API access tokens needed to call the Theme API on behalf of the merchant.</s-list-item>
+            <s-list-item>Theme metadata returned by Shopify, such as theme names, roles, processing status, and update timestamps.</s-list-item>
+            <s-list-item>Basic operational metadata such as granted scopes and authentication timestamps.</s-list-item>
+          </s-unordered-list>
+        </s-stack>
+      </s-section>
+
+      <s-section heading="How data is used">
+        <s-unordered-list>
+          <s-list-item>To authenticate the merchant and establish a session between the CLI and the hosted broker.</s-list-item>
+          <s-list-item>To show the merchant which themes are eligible for deletion.</s-list-item>
+          <s-list-item>To submit deletion requests only for themes the merchant explicitly confirms.</s-list-item>
+          <s-list-item>To satisfy Shopify platform requirements, including mandatory compliance webhooks.</s-list-item>
+        </s-unordered-list>
+      </s-section>
+
+      <s-section heading="Storage and retention">
+        <s-stack direction="block" gap="base">
+          <s-paragraph>
+            Local CLI configuration is stored on the merchant&apos;s own machine. Sensitive credentials are intended to be stored in the operating system credential store where
+            available.
+          </s-paragraph>
+          <s-paragraph>
+            The hosted broker stores short-lived authentication session data and app installation tokens only as needed to complete authentication and serve authenticated CLI
+            requests.
+          </s-paragraph>
+          <s-paragraph>
+            Theme Liquidator is not designed to store customer personal data. If Shopify sends a compliance webhook, it is handled to meet platform obligations.
+          </s-paragraph>
+        </s-stack>
+      </s-section>
+
+      <s-section heading="Sharing">
+        <s-paragraph>
+          Data is not sold. Data is shared only with service providers needed to operate the app infrastructure and with Shopify as part of normal platform operation.
+        </s-paragraph>
+      </s-section>
+
+      <s-section heading="Merchant rights and deletion requests">
+        <s-stack direction="block" gap="base">
+          <s-paragraph> Merchants can revoke app access at any time from Shopify. Revoking access prevents any further authenticated API use by the app. </s-paragraph>
+          <s-paragraph>
+            For privacy enquiries or deletion requests, use the contact page at
+            <s-link href="https://merlyndesignworks.co.uk/contact/" target="_blank">merlyndesignworks.co.uk/contact/</s-link>.
+          </s-paragraph>
+        </s-stack>
+      </s-section>
+
+      <s-section heading="Policy updates">
+        <s-paragraph>This policy may be updated from time to time. Material changes will be reflected on this page.</s-paragraph>
+        <s-paragraph>Last updated: 25 March 2026</s-paragraph>
+      </s-section>
+    </s-page>
+  </body>
+</html>
