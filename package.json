@@ -1,5 +1,5 @@
 {
-  "name": "@conducivemammal/theme-liquidator",
+  "name": "@conducivemammal/shopify-liquidator",
   "version": "0.1.4",
   "description": "Interactive CLI for deleting selected Shopify themes",
   "type": "module",

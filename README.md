@@ -21,7 +21,7 @@ To use the CLI, the store needs the companion Shopify app installed so the authe
 Install the published CLI globally:
 
 ```bash
-npm install -g @conducivemammal/theme-liquidator
+npm install -g @conducivemammal/shopify-liquidator
 ```
 
 After installation, use:
